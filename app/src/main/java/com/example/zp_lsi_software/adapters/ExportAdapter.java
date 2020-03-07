@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.example.zp_lsi_software.R;
 import com.example.zp_lsi_software.models.ExportModel;
+import com.example.zp_lsi_software.viewholders.ExportsHeadLineViewHolder;
 import com.example.zp_lsi_software.viewholders.ExportsViewHolder;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
 
     private final List<Object> exportModels;
+    private final ExportsHeadLineViewHolder.DialogListener dialogListener;
 
     enum Types {
         TYPE_HEADLINES(1),
@@ -32,8 +34,9 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
         }
     }
 
-    public ExportAdapter(List<Object> exportModels) {
+    public ExportAdapter(List<Object> exportModels, ExportsHeadLineViewHolder.DialogListener dialogListener) {
         this.exportModels = exportModels;
+        this.dialogListener = dialogListener;
     }
 
     @NonNull
@@ -44,7 +47,7 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
         switch (viewType) {
             case 1:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_headlines_db, parent, false);
-                return new ExportsViewHolder(itemView);
+                return new ExportsHeadLineViewHolder(itemView, dialogListener);
             case 2:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row_db, parent, false);
                 return new ExportsViewHolder(itemView);
@@ -58,6 +61,7 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
     public void onBindViewHolder(@NonNull ExportsViewHolder holder, int position) {
 
         if (exportModels.get(position) instanceof ExportModel) {
+
             ExportModel exportModel = (ExportModel) exportModels.get(position);
             holder.name.setText(exportModel.getName());
             holder.date.setText(exportModel.getDate());

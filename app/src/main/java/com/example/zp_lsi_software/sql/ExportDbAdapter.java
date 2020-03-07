@@ -119,9 +119,25 @@ public class ExportDbAdapter {
                     cursor.getString(USER_COLUMN),
                     cursor.getString(PLACE_COLUMN)));
         }
-
         cursor.close();
+        return list;
+    }
 
+    public List<Object> getRowsByFilter(int column, String filter){
+
+        String[] columns = {KEY_ID, KEY_NAME, KEY_DATE, KEY_HOUR, KEY_USER, KEY_PLACE};
+        Cursor cursor = sqLiteDatabase.query(DB_EXPORTS_TABLE, columns, columns[column] + " like" + "'%"+filter+"%'", null, null, null, null);
+
+        List<Object> list = new ArrayList<>();
+        while (cursor.moveToNext()){
+            list.add(new ExportModel(
+                    cursor.getString(NAME_COLUMN),
+                    cursor.getString(DATE_COLUMN),
+                    cursor.getString(HOUR_COLUMN),
+                    cursor.getString(USER_COLUMN),
+                    cursor.getString(PLACE_COLUMN)));
+        }
+        cursor.close();
         return list;
     }
 }

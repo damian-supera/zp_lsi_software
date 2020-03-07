@@ -1,7 +1,6 @@
 package com.example.zp_lsi_software.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zp_lsi_software.R;
 import com.example.zp_lsi_software.adapters.ExportAdapter;
+import com.example.zp_lsi_software.models.ExportModel;
 import com.example.zp_lsi_software.sql.ExportDbAdapter;
+import com.example.zp_lsi_software.viewholders.ExportsHeadLineViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final List<Object> list = new ArrayList<>();
     private ExportDbAdapter exportDbAdapter;
-
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +30,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
         prepareDatabase();
-        prepareContentData();
 
-        RecyclerView.Adapter adapter = new ExportAdapter(list);
+        adapter = new ExportAdapter(list, createDialogListener());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -59,12 +60,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
         list.addAll(exportDbAdapter.getAllExports());
         exportDbAdapter.close();
     }
 
-    private void prepareContentData() {
-
-
+    private ExportsHeadLineViewHolder.DialogListener createDialogListener(){
+        return new ExportsHeadLineViewHolder.DialogListener() {
+            @Override
+            public void applyFilter(int column, String filter) {
+                exportDbAdapter.open();
+                list.clear();
+                list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
+                list.addAll(exportDbAdapter.getRowsByFilter(column, filter));
+                exportDbAdapter.close();
+                adapter.notifyDataSetChanged();
+            }
+        };
     }
 }
