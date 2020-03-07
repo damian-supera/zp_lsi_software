@@ -1,3 +1,4 @@
 <resources>
     <dimen name="text_height">20dp</dimen>
+    <dimen name="text_headlines_height">40dp</dimen>
 </resources>

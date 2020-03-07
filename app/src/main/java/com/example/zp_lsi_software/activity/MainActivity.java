@@ -49,12 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: SQL db
 
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
-        list.add(new ExportModel("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal"));
+        list.add(new ExportModel("Nazwa" , "Data", "Godzina", "Użytkownik", "Lokal"));
+
+        for (int i = 0; i < 100; i++) {
+            list.add(new ExportModel("Nazwa" + i, "Data"+ i, "Godzina"+ i, "Użytkownik"+ i, "Lokal"+ i));
+        }
     }
 }
