@@ -47,16 +47,24 @@ public class MainActivity extends AppCompatActivity {
     private void prepareDatabase() {
 
         exportDbAdapter = new ExportDbAdapter(this).open();
-        exportDbAdapter.insertExport("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal");
 
-        for (int i = 0; i < 100; i++) {
-            exportDbAdapter.insertExport("Nazwa" + i, "Data" + i, "Godzina" + i, "Użytkownik" + i, "Lokal" + i);
+        List<Object> dataBaseList = exportDbAdapter.getAllExports();
+
+        if (dataBaseList.isEmpty()){
+
+            exportDbAdapter.insertExport("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal");
+
+            for (int i = 0; i < 100; i++) {
+                exportDbAdapter.insertExport("Nazwa" + i, "Data" + i, "Godzina" + i, "Użytkownik" + i, "Lokal" + i);
+            }
         }
+
+        list.addAll(exportDbAdapter.getAllExports());
+        exportDbAdapter.close();
     }
 
     private void prepareContentData() {
 
-        list.addAll(exportDbAdapter.getAllExports());
-        exportDbAdapter.close();
+
     }
 }
