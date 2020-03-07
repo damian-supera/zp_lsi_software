@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         if (dataBaseList.isEmpty()){
 
             for (int i = 1; i < 12; i++) {
-                for (int j = 1 ; j < 10; j++)
+                for (int j = 1 ; j < 30; j++)
                 {
-                    exportDbAdapter.insertExport("name" + (i+j), j + "-" + i, i +":" + j, "User" + (i*j), "Lokal" + i);
+                    exportDbAdapter.insertExport("name" + (i+j), j + "-" + i + "-2020", i +":" + j, "User" + (i*j), "Lokal" + i);
                 }
             }
         }
