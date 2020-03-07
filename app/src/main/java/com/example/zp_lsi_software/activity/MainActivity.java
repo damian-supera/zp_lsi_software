@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (dataBaseList.isEmpty()){
 
-            exportDbAdapter.insertExport("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal");
-
-            for (int i = 0; i < 100; i++) {
-                exportDbAdapter.insertExport("Nazwa" + i, "Data" + i, "Godzina" + i, "Użytkownik" + i, "Lokal" + i);
+            for (int i = 1; i < 12; i++) {
+                for (int j = 1 ; j < 10; j++)
+                {
+                    exportDbAdapter.insertExport("name" + (i+j), j + "-" + i, i +":" + j, "User" + (i*j), "Lokal" + i);
+                }
             }
         }
 
