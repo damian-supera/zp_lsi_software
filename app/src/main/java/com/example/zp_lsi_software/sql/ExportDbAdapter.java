@@ -22,24 +22,24 @@ public class ExportDbAdapter {
     private static final String DB_EXPORTS_TABLE = "exports";
 
     // Kolumny
-    public static final String KEY_ID = "_id";
-    public static final String ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
-    public static final int ID_COLUMN = 0;
-    public static final String KEY_NAME = "name";
-    public static final String NAME_OPTIONS = "TEXT NOT NULL";
-    public static final int NAME_COLUMN = 1;
-    public static final String KEY_DATE = "date";
-    public static final String DATE_OPTIONS = "TEXT NOT NULL";
-    public static final int DATE_COLUMN = 2;
-    public static final String KEY_HOUR = "hour";
-    public static final String HOUR_OPTIONS = "TEXT NOT NULL";
-    public static final int HOUR_COLUMN = 3;
-    public static final String KEY_USER = "user";
-    public static final String USER_OPTIONS = "TEXT NOT NULL";
-    public static final int USER_COLUMN = 4;
-    public static final String KEY_PLACE = "place";
-    public static final String PLACE_OPTIONS = "TEXT NOT NULL";
-    public static final int PLACE_COLUMN = 5;
+    private static final String KEY_ID = "_id";
+    private static final String ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
+    private static final int ID_COLUMN = 0;
+    private static final String KEY_NAME = "name";
+    private static final String NAME_OPTIONS = "TEXT NOT NULL";
+    private static final int NAME_COLUMN = 1;
+    private static final String KEY_DATE = "date";
+    private static final String DATE_OPTIONS = "TEXT NOT NULL";
+    private static final int DATE_COLUMN = 2;
+    private static final String KEY_HOUR = "hour";
+    private static final String HOUR_OPTIONS = "TEXT NOT NULL";
+    private static final int HOUR_COLUMN = 3;
+    private static final String KEY_USER = "user";
+    private static final String USER_OPTIONS = "TEXT NOT NULL";
+    private static final int USER_COLUMN = 4;
+    private static final String KEY_PLACE = "place";
+    private static final String PLACE_OPTIONS = "TEXT NOT NULL";
+    private static final int PLACE_COLUMN = 5;
 
     // stałe do tworzenia i usuwania bazy
     private static final String DB_CREATE_EXPORT_TABLE =
@@ -60,7 +60,7 @@ public class ExportDbAdapter {
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
-        public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
 
@@ -106,29 +106,6 @@ public class ExportDbAdapter {
         return sqLiteDatabase.insert(DB_EXPORTS_TABLE, null, contentValues);
     }
 
-    public boolean updateExport(ExportDatabaseModel exportDatabaseModel) {
-        long id = exportDatabaseModel.getId();
-
-        String name = exportDatabaseModel.getName();
-        String date = exportDatabaseModel.getDate();
-        String hour = exportDatabaseModel.getHour();
-        String user = exportDatabaseModel.getUser();
-        String place = exportDatabaseModel.getPlace();
-
-        return updateExport(id, name, date, hour, user, place);
-    }
-
-    public boolean updateExport(long id, String name, String date, String hour, String user, String place) {
-        String where = KEY_ID + "=" + id;
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_NAME, name);
-        contentValues.put(KEY_DATE, date);
-        contentValues.put(KEY_HOUR, hour);
-        contentValues.put(KEY_USER, user);
-        contentValues.put(KEY_PLACE, place);
-        return sqLiteDatabase.update(DB_EXPORTS_TABLE, contentValues, where, null) > 0;
-    }
-
     public List<Object> getAllExports() {
         String[] columns = {KEY_ID, KEY_NAME, KEY_DATE, KEY_HOUR, KEY_USER, KEY_PLACE};
         Cursor cursor = sqLiteDatabase.query(DB_EXPORTS_TABLE, columns, null, null, null, null, null);
@@ -142,6 +119,8 @@ public class ExportDbAdapter {
                     cursor.getString(USER_COLUMN),
                     cursor.getString(PLACE_COLUMN)));
         }
+
+        cursor.close();
 
         return list;
     }

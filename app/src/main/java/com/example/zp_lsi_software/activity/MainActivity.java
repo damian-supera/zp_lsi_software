@@ -1,6 +1,5 @@
 package com.example.zp_lsi_software.activity;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,11 +18,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    View view;
-    RecyclerView.Adapter adapter;
-    final List<Object> list = new ArrayList<>();
-    ExportDbAdapter exportDbAdapter;
+    private final List<Object> list = new ArrayList<>();
+    private ExportDbAdapter exportDbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         prepareDatabase();
         prepareContentData();
 
-        adapter = new ExportAdapter(list);
+        RecyclerView.Adapter adapter = new ExportAdapter(list);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -50,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareDatabase() {
 
-        exportDbAdapter = new ExportDbAdapter(this);
-        exportDbAdapter.open();
+        exportDbAdapter = new ExportDbAdapter(this).open();
         exportDbAdapter.insertExport("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal");
 
         for (int i = 0; i < 100; i++) {

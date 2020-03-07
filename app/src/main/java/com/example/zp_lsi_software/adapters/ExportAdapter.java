@@ -27,7 +27,7 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
             this.value = value;
         }
 
-        public int getValue() {
+        private int getValue() {
             return value;
         }
     }
