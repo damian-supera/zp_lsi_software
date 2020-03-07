@@ -1,5 +1,6 @@
 package com.example.zp_lsi_software.activity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zp_lsi_software.R;
 import com.example.zp_lsi_software.adapters.ExportAdapter;
-import com.example.zp_lsi_software.models.ExportModel;
+import com.example.zp_lsi_software.sql.ExportDbAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     View view;
     RecyclerView.Adapter adapter;
     final List<Object> list = new ArrayList<>();
+    ExportDbAdapter exportDbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
 
+        prepareDatabase();
         prepareContentData();
 
         adapter = new ExportAdapter(list);
@@ -45,14 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void prepareContentData() {
+    private void prepareDatabase() {
 
-        // TODO: SQL db
-
-        list.add(new ExportModel("Nazwa" , "Data", "Godzina", "Użytkownik", "Lokal"));
+        exportDbAdapter = new ExportDbAdapter(this);
+        exportDbAdapter.open();
+        exportDbAdapter.insertExport("Nazwa", "Data", "Godzina", "Użytkownik", "Lokal");
 
         for (int i = 0; i < 100; i++) {
-            list.add(new ExportModel("Nazwa" + i, "Data"+ i, "Godzina"+ i, "Użytkownik"+ i, "Lokal"+ i));
+            exportDbAdapter.insertExport("Nazwa" + i, "Data" + i, "Godzina" + i, "Użytkownik" + i, "Lokal" + i);
         }
+    }
+
+    private void prepareContentData() {
+
+        list.addAll(exportDbAdapter.getAllExports());
+        exportDbAdapter.close();
     }
 }
