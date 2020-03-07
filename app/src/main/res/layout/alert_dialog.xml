@@ -6,12 +6,13 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/text_alert_dialog" />
 
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:importantForAutofill="no" />
 
 </LinearLayout>

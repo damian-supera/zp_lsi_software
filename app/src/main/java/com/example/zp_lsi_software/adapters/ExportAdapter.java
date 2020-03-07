@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
 
-    private final List<Object> exportModels;
+    private final List<ExportModel> exportModels;
     private final ExportsHeadLineViewHolder.DialogListener dialogListener;
 
     enum Types {
@@ -34,7 +34,7 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
         }
     }
 
-    public ExportAdapter(List<Object> exportModels, ExportsHeadLineViewHolder.DialogListener dialogListener) {
+    public ExportAdapter(List<ExportModel> exportModels, ExportsHeadLineViewHolder.DialogListener dialogListener) {
         this.exportModels = exportModels;
         this.dialogListener = dialogListener;
     }
@@ -49,7 +49,7 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_headlines_db, parent, false);
                 return new ExportsHeadLineViewHolder(itemView, dialogListener);
             case 2:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row_db, parent, false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_context_db, parent, false);
                 return new ExportsViewHolder(itemView);
             default:
                 return new ExportsViewHolder(parent) {
@@ -60,15 +60,12 @@ public class ExportAdapter extends RecyclerView.Adapter<ExportsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ExportsViewHolder holder, int position) {
 
-        if (exportModels.get(position) instanceof ExportModel) {
-
-            ExportModel exportModel = (ExportModel) exportModels.get(position);
-            holder.name.setText(exportModel.getName());
-            holder.date.setText(exportModel.getDate());
-            holder.hour.setText(exportModel.getHour());
-            holder.user.setText(exportModel.getUser());
-            holder.place.setText(exportModel.getPlace());
-        }
+        ExportModel exportModel = exportModels.get(position);
+        holder.name.setText(exportModel.getName());
+        holder.date.setText(exportModel.getDate());
+        holder.hour.setText(exportModel.getHour());
+        holder.user.setText(exportModel.getUser());
+        holder.place.setText(exportModel.getPlace());
     }
 
     @Override

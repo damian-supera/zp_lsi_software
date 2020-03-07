@@ -106,11 +106,11 @@ public class ExportDbAdapter {
         return sqLiteDatabase.insert(DB_EXPORTS_TABLE, null, contentValues);
     }
 
-    public List<Object> getAllExports() {
+    public List<ExportModel> getAllExports() {
         String[] columns = {KEY_ID, KEY_NAME, KEY_DATE, KEY_HOUR, KEY_USER, KEY_PLACE};
         Cursor cursor = sqLiteDatabase.query(DB_EXPORTS_TABLE, columns, null, null, null, null, null);
 
-        List<Object> list = new ArrayList<>();
+        List<ExportModel> list = new ArrayList<>();
         while (cursor.moveToNext()){
             list.add(new ExportModel(
                     cursor.getString(NAME_COLUMN),
@@ -123,12 +123,12 @@ public class ExportDbAdapter {
         return list;
     }
 
-    public List<Object> getRowsByFilter(int column, String filter){
+    public List<ExportModel> getExportsByFilter(int column, String filter){
 
         String[] columns = {KEY_ID, KEY_NAME, KEY_DATE, KEY_HOUR, KEY_USER, KEY_PLACE};
         Cursor cursor = sqLiteDatabase.query(DB_EXPORTS_TABLE, columns, columns[column] + " like" + "'%"+filter+"%'", null, null, null, null);
 
-        List<Object> list = new ArrayList<>();
+        List<ExportModel> list = new ArrayList<>();
         while (cursor.moveToNext()){
             list.add(new ExportModel(
                     cursor.getString(NAME_COLUMN),

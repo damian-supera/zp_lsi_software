@@ -29,4 +29,28 @@
         <item name="android:background">@android:color/darker_gray</item>
     </style>
 
+    <style name="text_alert_dialog">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="text_list_row">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="text_list_context" parent="@style/text_list_row">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/text_height</item>
+    </style>
+
+    <style name="text_list_headline" parent="@style/text_list_row">
+        <item name="android:layout_height">@dimen/text_headlines_height</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
 </resources>
